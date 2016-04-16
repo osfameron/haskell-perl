@@ -75,10 +75,11 @@ sub getHierarchy($self, $prog) {
 
 package main;
 use Data::Dumper::Concise;
+use feature 'say';
 
 my $b1 = Brand->new( id => "bbc" );
 my $s1 = Series->new( id => "hignfy");
-my $e1 = Episode->new( id => "hignfy1");
+my $e1 = Episode->new( id => "hignfy1", id2 => "hignfy1a");
 
 my $db = Database->new(
     list => [$b1, $s1, $e1],
@@ -88,10 +89,26 @@ my $db = Database->new(
     }
 );
 
-print Dumper(
+say Dumper(
     $db->getHierarchy(
         $db->search(
             Episode->new( id => 'hignfy1' )
+        )
+    )
+);
+
+say Dumper(
+    $db->getHierarchy(
+        $db->search(
+            Episode->new( id2 => 'hignfy1a' )
+        )
+    )
+);
+
+say Dumper(
+    $db->getHierarchy(
+        $db->search(
+            Series->new( id => 'hignfy', id2 => 'new ID' )
         )
     )
 );
